@@ -9,11 +9,10 @@ import com.challenge.rickandmorty.infrastructure.mapper.CharacterMapper;
 import com.challenge.rickandmorty.application.usecase.GetCharacterByIdUseCase;
 import com.challenge.rickandmorty.domain.gateway.CharacterGateway;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration
-public class Configuracion {
+@org.springframework.context.annotation.Configuration
+public class Configuration {
 
     @Bean
     public RestTemplate restTemplate(){

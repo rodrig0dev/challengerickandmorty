@@ -26,11 +26,10 @@ public class CharacterRequestImp implements CharacterRequest {
 
     @Override
     public Character getCharacterById(Integer id) {
-        String endPointWithId = urlEndPoint.concat(String.valueOf(id));
-        logger.info("Endpoint URL Request : " + endPointWithId);
+        logger.info("Endpoint URL Request : " + urlEndPoint);
 
         try {
-            return restTemplate.getForObject(endPointWithId, Character.class);
+            return restTemplate.getForObject(urlEndPoint, Character.class, String.valueOf(id));
         }catch(HttpClientErrorException e){
             logger.error("Request Error : " + e.getMessage());
             throw new CharacterNotFoundException();

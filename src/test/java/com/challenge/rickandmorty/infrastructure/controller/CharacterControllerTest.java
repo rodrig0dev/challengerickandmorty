@@ -1,5 +1,6 @@
 package com.challenge.rickandmorty.infrastructure.controller;
 
+import com.challenge.rickandmorty.infrastructure.dto.CharacterDTO;
 import com.challenge.rickandmorty.infrastructure.mocks.CharacterDTOMock;
 import com.challenge.rickandmorty.infrastructure.mocks.CharacterMock;
 import com.challenge.rickandmorty.infrastructure.mocks.LocationMock;
@@ -47,13 +48,9 @@ public class CharacterControllerTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void shouldReturn404WhenCharacterIdNotExist() throws Exception{
-        Map<String,String> map = new HashMap<>();
-        map.put("message","Character not found");
-
         when(characterController.getCharacterById(9999))
-                .thenReturn(new ResponseEntity(map, HttpStatus.NOT_FOUND));
+                .thenReturn(ResponseEntity.notFound().build());
 
         mockMvc.perform(get("/api/character/9999"))
                     .andDo(print())

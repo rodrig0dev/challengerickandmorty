@@ -20,12 +20,14 @@ public class ApplicationHandlerException {
     }
 
     @ExceptionHandler(HttpServerRickAndMortyException.class)
-    public ResponseEntity<Map<String,String>> handlerServerErrorException(){
-        return ResponseEntity.internalServerError().body(Map.of("error","Server error"));
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handlerServerErrorException(){
+        return Map.of("error","Server error");
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Map<String,String>> MethodArgumentTypeMismatch(){
-        return ResponseEntity.badRequest().body(Map.of("error","Hey! you must provide an id"));
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public Map<String, String> MethodArgumentTypeMismatch(){
+        return Map.of("error","Hey! you must provide an id");
     }
 }

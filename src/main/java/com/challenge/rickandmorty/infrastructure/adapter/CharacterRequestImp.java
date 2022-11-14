@@ -1,0 +1,43 @@
+package com.challenge.rickandmorty.infrastructure.adapter;
+
+import com.challenge.rickandmorty.infrastructure.adapter.gateway.CharacterRequest;
+import com.challenge.rickandmorty.application.exception.CharacterNotFoundException;
+import com.challenge.rickandmorty.application.exception.HttpServerRickAndMortyException;
+import com.challenge.rickandmorty.domain.model.Character;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
+
+public class CharacterRequestImp implements CharacterRequest {
+
+    private final RestTemplate restTemplate;
+
+    private static final Logger logger = LoggerFactory.getLogger(CharacterRequestImp.class);
+
+    @Value("${endpoint.rickandmorty.character}")
+    private String urlEndPoint;
+
+    public CharacterRequestImp(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @Override
+    public Character getCharacterById(Integer id) {
+        String endPointWithId = urlEndPoint.concat(String.valueOf(id));
+        logger.info("Endpoint URL Request : " + endPointWithId);
+
+        try {
+            return restTemplate.getForObject(endPointWithId, Character.class);
+        }catch(HttpClientErrorException e){
+            logger.error("Request Error : " + e.getMessage());
+            throw new CharacterNotFoundException();
+        }catch (HttpServerErrorException e){
+            logger.error("Request Error : " + e.getMessage());
+            throw new HttpServerRickAndMortyException();
+        }
+
+    }
+}

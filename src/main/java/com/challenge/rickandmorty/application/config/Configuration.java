@@ -20,29 +20,28 @@ public class Configuration {
     }
 
     @Bean
-    public CharacterRequest characterRequest(RestTemplate restTemplate){
-        return new CharacterRequestImp(restTemplate);
+    public CharacterRequest characterRequest(){
+        return new CharacterRequestImp(restTemplate());
     }
 
     @Bean
-    public LocationRequest locationRequest(RestTemplate restTemplate){
-        return new LocationRequestImp(restTemplate);
-    }
+    public LocationRequest locationRequest(){
 
+        return new LocationRequestImp(restTemplate());
+    }
 
     @Bean
     public CharacterMapper characterMapper(){
         return new CharacterMapper();
     }
     @Bean
-    public GetCharacterByIdUseCase getCharacter(CharacterGateway characterGateway){
-        return new GetCharacterByIdUseCase(characterGateway);
+    public GetCharacterByIdUseCase getCharacter(){
+        return new GetCharacterByIdUseCase(characterService());
     }
 
     @Bean
-    public CharacterGateway characterService(CharacterRequest characterReq, LocationRequest locationReq,
-                                             CharacterMapper characterMapper){
-        return new CharacterService(characterReq, locationReq, characterMapper);
+    public CharacterGateway characterService(){
+        return new CharacterService(characterRequest(), locationRequest(), characterMapper());
     }
 
 }

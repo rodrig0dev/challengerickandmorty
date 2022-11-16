@@ -5,7 +5,7 @@ import com.challenge.rickandmorty.domain.model.Character;
 import com.challenge.rickandmorty.domain.model.Location;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class CharacterMapper implements Mapper<CharacterDTO, Character, Location> {
     @Override
     public CharacterDTO fromModel(Character character, Location location) {

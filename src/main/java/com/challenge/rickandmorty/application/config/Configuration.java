@@ -29,6 +29,11 @@ public class Configuration {
         return new LocationRequestImp(restTemplate);
     }
 
+
+    @Bean
+    public CharacterMapper characterMapper(){
+        return new CharacterMapper();
+    }
     @Bean
     public GetCharacterByIdUseCase getCharacter(CharacterGateway characterGateway){
         return new GetCharacterByIdUseCase(characterGateway);
